@@ -29,16 +29,19 @@ class VSTPluginLibrary;
 class VSTPluginInstance
 {
 public:
+	static VSTPluginInstance* create(const std::shared_ptr<VSTPluginLibrary>& library, int processLevel);
+	static void operator delete(void* ptr);
+
 	VSTPluginInstance(const std::shared_ptr<VSTPluginLibrary>& library, int processLevel);
-	~VSTPluginInstance();
+	virtual ~VSTPluginInstance();
 
-	bool initialize();
+	virtual bool initialize();
 
-	int numInputs() const;
-	int numOutputs() const;
-	bool canReplacing() const;
-	int uniqueID() const;
-	std::wstring getName() const;
+	virtual int numInputs() const;
+	virtual int numOutputs() const;
+	virtual bool canReplacing() const;
+	virtual int uniqueID() const;
+	virtual std::wstring getName() const;
 	int getUsedChannelCount() const;
 	void setUsedChannelCount(int count);
 	float getSampleRate() const;
@@ -46,21 +49,21 @@ public:
 	void setProcessLevel(int value);
 	int getLanguage() const;
 	void setLanguage(int value);
-	bool canDoubleReplacing() const;
+	virtual bool canDoubleReplacing() const;
 
-	void prepareForProcessing(float sampleRate, int blockSize);
-	void writeToEffect(const std::wstring& chunkData, const std::unordered_map<std::wstring, float>& paramMap);
-	void readFromEffect(std::wstring& chunkData, std::unordered_map<std::wstring, float>& paramMap) const;
+	virtual void prepareForProcessing(float sampleRate, int blockSize);
+	virtual void writeToEffect(const std::wstring& chunkData, const std::unordered_map<std::wstring, float>& paramMap);
+	virtual void readFromEffect(std::wstring& chunkData, std::unordered_map<std::wstring, float>& paramMap) const;
 
-	void startProcessing();
-	void processDoubleReplacing(double** inputArray, double** outputArray, int frameCount);
-	void processReplacing(float** inputArray, float** outputArray, int frameCount);
+	virtual void startProcessing();
+	virtual void processDoubleReplacing(double** inputArray, double** outputArray, int frameCount);
+	virtual void processReplacing(float** inputArray, float** outputArray, int frameCount);
 	void process(float** inputArray, float** outputArray, int frameCount);
-	void stopProcessing();
+	virtual void stopProcessing();
 
-	void startEditing(HWND hWnd, short* width, short* height);
+	virtual void startEditing(HWND hWnd, short* width, short* height);
 	void doIdle();
-	void stopEditing();
+	virtual void stopEditing();
 
 	void setAutomateFunc(std::function<void()> func);
 	void onAutomate();

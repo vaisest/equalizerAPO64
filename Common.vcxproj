@@ -134,27 +134,27 @@
     <MUPARSERX_LIB Condition="'$(MUPARSERX_LIB)'==''">F:\Git\muparserx\build\Release</MUPARSERX_LIB>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir);$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)external\vst3sdk;$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
     <LibraryPath>$(LIBSNDFILE_LIB);$(MUPARSERX_LIB);$(FFTW_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir);$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)external\vst3sdk;$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
     <LibraryPath>$(LIBSNDFILE_LIB);$(MUPARSERX_LIB);$(FFTW_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <IncludePath>$(SolutionDir);$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)external\vst3sdk;$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
     <LibraryPath>$(LIBSNDFILE_LIB);$(MUPARSERX_LIB);$(FFTW_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir);$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)external\vst3sdk;$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
     <LibraryPath>$(LIBSNDFILE_LIB);$(MUPARSERX_LIB);$(FFTW_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir);$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)external\vst3sdk;$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
     <LibraryPath>$(LIBSNDFILE_LIB);$(MUPARSERX_LIB);$(FFTW_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <IncludePath>$(SolutionDir);$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)external\vst3sdk;$(IncludePath);$(LIBSNDFILE_INCLUDE);$(MUPARSERX_INCLUDE);$(FFTW_INCLUDE)</IncludePath>
     <LibraryPath>$(LIBSNDFILE_LIB);$(MUPARSERX_LIB);$(FFTW_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -348,6 +348,8 @@
     <ClInclude Include="helpers\UncaughtExceptions.h" />
     <ClInclude Include="helpers\VSTPluginInstance.h" />
     <ClInclude Include="helpers\VSTPluginLibrary.h" />
+    <ClInclude Include="helpers\VST3PluginInstance.h" />
+    <ClInclude Include="helpers\VST3PluginLibrary.h" />
     <ClInclude Include="IFilter.h" />
     <ClInclude Include="IFilterFactory.h" />
     <ClInclude Include="libHybridConv-0.1.1\libHybridConv_eapo.h" />
@@ -398,6 +400,8 @@
     <ClCompile Include="helpers\StringHelper.cpp" />
     <ClCompile Include="helpers\VSTPluginInstance.cpp" />
     <ClCompile Include="helpers\VSTPluginLibrary.cpp" />
+    <ClCompile Include="helpers\VST3PluginInstance.cpp" />
+    <ClCompile Include="helpers\VST3PluginLibrary.cpp" />
     <ClCompile Include="IFilter.cpp" />
     <ClCompile Include="libHybridConv-0.1.1\libHybridConv_eapo.cpp" />
     <ClCompile Include="parser\LogicalOperators.cpp" />
@@ -412,6 +416,52 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="external\vst3sdk\pluginterfaces\base\coreiids.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="external\vst3sdk\pluginterfaces\base\funknown.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="external\vst3sdk\public.sdk\source\common\commoniids.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="external\vst3sdk\public.sdk\source\common\commonstringconvert.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="external\vst3sdk\public.sdk\source\common\memorystream.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="external\vst3sdk\public.sdk\source\vst\hosting\hostclasses.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="external\vst3sdk\public.sdk\source\vst\hosting\parameterchanges.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="external\vst3sdk\public.sdk\source\vst\hosting\pluginterfacesupport.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="external\vst3sdk\public.sdk\source\vst\hosting\processdata.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="external\vst3sdk\public.sdk\source\vst\utility\stringconvert.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="external\vst3sdk\public.sdk\source\vst\vstinitiids.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

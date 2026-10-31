@@ -21,6 +21,7 @@
 #include "RegistryHelper.h"
 #include "LogHelper.h"
 #include "VSTPluginLibrary.h"
+#include "VST3PluginLibrary.h"
 
 using namespace std;
 
@@ -40,7 +41,10 @@ std::shared_ptr<VSTPluginLibrary> VSTPluginLibrary::getInstance(const wstring& l
 
 	if (ptr == NULL)
 	{
-		ptr = shared_ptr<VSTPluginLibrary>(new VSTPluginLibrary(libPath));
+		if (VST3PluginLibrary::isVST3(libPath))
+			ptr = shared_ptr<VSTPluginLibrary>(new VST3PluginLibrary(libPath));
+		else
+			ptr = shared_ptr<VSTPluginLibrary>(new VSTPluginLibrary(libPath));
 		instanceMap[libPath] = ptr;
 	}
 

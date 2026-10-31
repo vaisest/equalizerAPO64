@@ -22,8 +22,11 @@
 #include <inttypes.h>
 #include "StringHelper.h"
 #include "../Version.h"
+#include "MemoryHelper.h"
 #include "VSTPluginLibrary.h"
 #include "VSTPluginInstance.h"
+#include "VST3PluginLibrary.h"
+#include "VST3PluginInstance.h"
 
 using namespace std;
 
@@ -126,6 +129,19 @@ static intptr_t callback(struct vst_effect_t* effect, int32_t opcode, int32_t in
 	}
 
 	return 0;
+}
+
+VSTPluginInstance* VSTPluginInstance::create(const std::shared_ptr<VSTPluginLibrary>& library, int processLevel)
+{
+	if (dynamic_cast<VST3PluginLibrary*>(library.get()) != NULL)
+		return new(MemoryHelper::alloc(sizeof(VST3PluginInstance))) VST3PluginInstance(library, processLevel);
+
+	return new(MemoryHelper::alloc(sizeof(VSTPluginInstance))) VSTPluginInstance(library, processLevel);
+}
+
+void VSTPluginInstance::operator delete(void* ptr)
+{
+	MemoryHelper::free(ptr);
 }
 
 VSTPluginInstance::VSTPluginInstance(const std::shared_ptr<VSTPluginLibrary>& library, int processLevel)

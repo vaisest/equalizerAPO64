@@ -45,8 +45,7 @@ std::vector<std::wstring> VSTPluginFilter::initialize(float sampleRate, unsigned
 
 	skipProcessing = false;
 
-	void* mem = MemoryHelper::alloc(sizeof(VSTPluginInstance));
-	VSTPluginInstance* firstEffect = new(mem) VSTPluginInstance(library, 2);
+	VSTPluginInstance* firstEffect = VSTPluginInstance::create(library, 2);
 	if (!firstEffect->initialize())
 	{
 		LogF(L"The VST plugin %s crashed during initialization.", libPath.c_str());
@@ -54,14 +53,18 @@ std::vector<std::wstring> VSTPluginFilter::initialize(float sampleRate, unsigned
 	}
 
 	effectChannelCount = max(firstEffect->numInputs(), firstEffect->numOutputs());
+	if (effectChannelCount == 0)
+	{
+		effectChannelCount = 1;
+		skipProcessing = true;
+	}
 	// round up
 	effectCount = (channelCount + (effectChannelCount - 1)) / effectChannelCount;
 	effects = (VSTPluginInstance**)MemoryHelper::alloc(effectCount * sizeof(VSTPluginInstance*));
 	effects[0] = firstEffect;
 	for (unsigned i = 1; i < effectCount; i++)
 	{
-		mem = MemoryHelper::alloc(sizeof(VSTPluginInstance));
-		effects[i] = new(mem) VSTPluginInstance(library, 2);
+		effects[i] = VSTPluginInstance::create(library, 2);
 		if (!effects[i]->initialize() && !skipProcessing)
 		{
 			LogF(L"The VST plugin %s crashed during initialization.", libPath.c_str());

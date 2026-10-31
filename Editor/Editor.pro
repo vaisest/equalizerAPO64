@@ -128,6 +128,19 @@ SOURCES += main.cpp\
 	../filters/VSTPluginFilter.cpp \
 	../filters/VSTPluginFilterFactory.cpp \
 	../helpers/VSTPluginInstance.cpp \
+	../helpers/VST3PluginLibrary.cpp \
+	../helpers/VST3PluginInstance.cpp \
+	../external/vst3sdk/pluginterfaces/base/funknown.cpp \
+	../external/vst3sdk/pluginterfaces/base/coreiids.cpp \
+	../external/vst3sdk/public.sdk/source/common/commoniids.cpp \
+	../external/vst3sdk/public.sdk/source/common/commonstringconvert.cpp \
+	../external/vst3sdk/public.sdk/source/common/memorystream.cpp \
+	../external/vst3sdk/public.sdk/source/vst/vstinitiids.cpp \
+	../external/vst3sdk/public.sdk/source/vst/utility/stringconvert.cpp \
+	../external/vst3sdk/public.sdk/source/vst/hosting/hostclasses.cpp \
+	../external/vst3sdk/public.sdk/source/vst/hosting/parameterchanges.cpp \
+	../external/vst3sdk/public.sdk/source/vst/hosting/pluginterfacesupport.cpp \
+	../external/vst3sdk/public.sdk/source/vst/hosting/processdata.cpp \
 	guis/LoudnessCorrectionFilterGUI.cpp \
 	guis/LoudnessCorrectionFilterGUIFactory.cpp \
 	../filters/loudnessCorrection/LoudnessCorrectionFilter.cpp \
@@ -251,6 +264,8 @@ HEADERS  += \
 	../filters/VSTPluginFilter.h \
 	../filters/VSTPluginFilterFactory.h \
 	../helpers/VSTPluginInstance.h \
+	../helpers/VST3PluginLibrary.h \
+	../helpers/VST3PluginInstance.h \
 	guis/LoudnessCorrectionFilterGUI.h \
 	guis/LoudnessCorrectionFilterGUIFactory.h \
 	../filters/loudnessCorrection/LoudnessCorrectionFilter.h \
@@ -314,7 +329,7 @@ isEmpty(MUPARSERX_LIB) {
 	MUPARSERX_LIB = "F:/Git/amd-fftw/muparserx/build/Release"
 }
 
-INCLUDEPATH += $$PWD/.. $$LIBSNDFILE_INCLUDE $$FFTW_INCLUDE $$MUPARSERX_INCLUDE
+INCLUDEPATH += $$PWD/.. $$PWD/../external/vst3sdk $$LIBSNDFILE_INCLUDE $$FFTW_INCLUDE $$MUPARSERX_INCLUDE
 LIBS += user32.lib advapi32.lib version.lib ole32.lib Shlwapi.lib authz.lib crypt32.lib dbghelp.lib winmm.lib sndfile.lib libfftw3.lib
 
 build_pass:CONFIG(debug, debug|release) {
